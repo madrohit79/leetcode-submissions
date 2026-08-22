@@ -2,6 +2,7 @@ class Solution {
     public int characterReplacement(String s, int k) {
         HashMap<Character,Integer> map = new HashMap<>();
         int max = 0;
+        int maxf = 0;
         int l=0;
         int r=0;
         while(r<s.length()){
@@ -12,7 +13,7 @@ class Solution {
                 map.put(c,1);
             }
             r++;
-            int maxf = Collections.max(map.values());
+            maxf = Math.max(maxf,map.get(c));
             if( (r-l)- maxf <= k ){
                 max=Math.max(max,(r-l));
             }else{
