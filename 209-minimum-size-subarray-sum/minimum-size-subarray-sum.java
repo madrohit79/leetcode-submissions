@@ -5,11 +5,11 @@ class Solution {
         int ans = 1000000000;
         int l = 0;
         int r = 0;
-        while (r < nums.length) {
-            sum += nums[r];
+        while(r<nums.length){
+            sum+=nums[r];
             r++;
-            while (sum >= target) {
-                ans = Math.min(ans, r-l);
+            while(sum>=target){
+                ans = Math.min(ans,r-l);
                 sum-=nums[l];
                 l++;
             }
