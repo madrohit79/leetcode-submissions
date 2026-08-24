@@ -1,16 +1,16 @@
 class Solution {
-    public int carFleet(int target, int[] position, int[] speed) {
-        int n = position.length;
-        int[][] cars = new int[n][2];
-        for(int i = 0; i < n; i++){
-            cars[i][0] = position[i];
-            cars[i][1] = speed[i];
+    public int carFleet(int t, int[] p, int[] s) {
+        int n = p.length;
+        Stack<Double> stack = new Stack<>(); // storing times 
+        int[][] arr = new int[n][2];   //positions and speeds array for sorting purpose 
+        for(int i = 0 ; i<n;i++){
+            arr[i][0]=p[i];
+            arr[i][1]=s[i];
         }
-        Arrays.sort(cars, (a,b) -> Integer.compare(b[0], a[0]));
-        Stack<Double> stack = new Stack<>();
-        for(int i = 0; i < n; i++){
-            double time = (double)(target - cars[i][0]) / cars[i][1];
-            if(stack.isEmpty() || time > stack.peek()){
+        Arrays.sort(arr, (a,b)->Integer.compare(b[0],a[0]));
+        for(int i=0;i<n;i++){
+            double time = (double)(t-arr[i][0])/arr[i][1];
+            if(stack.isEmpty()||time>stack.peek()){
                 stack.push(time);
             }
         }
