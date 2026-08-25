@@ -1,0 +1,46 @@
+Span = the number of consecutive previous days whose price is less than or equal to the current price.
+
+We store the span because it compresses multiple previous days into one value.
+
+Example:
+
+100, 80, 60, 70, 60, 75
+
+For 75:
+
+60 → can cross
+70 → can cross
+60 → can cross
+
+So the span of 75 is 4 days (including today).
+
+This lets future prices skip multiple previous days at once instead of checking them one by one.
+
+Therefore:
+
+Span = compressed information about how many previous days can be crossed.
+
+
+NEW SYNTAX:
+
+Stack<int[]> stack = new Stack<>();
+
+Here, each element of the stack is an int array containing two values:
+
+[price, index]
+
+Example:
+
+stack.push(new int[]{price, i});
+
+To access them:
+
+stack.peek()[0] → price
+stack.peek()[1] → index
+
+Example:
+
+int[] top = stack.peek();
+
+top[0] → price
+top[1] → index
