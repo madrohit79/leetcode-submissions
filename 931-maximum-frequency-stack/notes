@@ -1,0 +1,106 @@
+KEY SYNTAXES — LEETCODE 895 FREQ STACK
+
+1. HashMap basic operations
+
+HashMap<Integer,Integer> m1 = new HashMap<>();
+
+m1.containsKey(val)
+→ checks if val exists
+
+m1.put(val, 1)
+→ adds/updates val
+
+m1.get(val)
+→ gets the value associated with val
+
+
+2. HashMap with Stack as the value
+
+HashMap<Integer,Stack<Integer>> m2 = new HashMap<>();
+
+m2.put(f, new Stack<>())
+→ creates a new Stack for frequency f
+
+m2.get(f)
+→ gets the Stack associated with frequency f
+
+m2.get(f).push(val)
+→ pushes val into that Stack
+
+m2.get(f).pop()
+→ removes and returns the top element
+
+
+3. Stack operations
+
+Stack<Integer> stack = new Stack<>();
+
+stack.push(val)
+→ add to top
+
+stack.pop()
+→ remove and return top
+
+stack.peek()
+→ view top without removing
+
+stack.isEmpty()
+→ check whether empty
+
+
+4. Updating a HashMap value
+
+m1.put(val, m1.get(val) + 1)
+→ increase frequency by 1
+
+m1.put(val, m1.get(val) - 1)
+→ decrease frequency by 1
+
+
+5. Checking if a Stack inside a HashMap is empty
+
+if(m2.get(maxf).isEmpty()){
+    maxf--;
+}
+
+→ If the stack corresponding to maxf is empty,
+  there are no more elements at that frequency.
+
+
+6. Nested access
+
+m2.get(maxf).pop()
+
+Meaning:
+
+m2
+ ↓
+get(maxf)
+ ↓
+returns Stack<Integer>
+ ↓
+pop()
+ ↓
+returns the top Integer
+
+
+7. Generic HashMap syntax
+
+HashMap<KeyType,ValueType>
+
+Example:
+
+HashMap<Integer,Integer>
+→ Integer key → Integer value
+
+HashMap<Integer,Stack<Integer>>
+→ Integer key → Stack<Integer> value
+
+
+8. Updating maximum
+
+if(f > maxf){
+    maxf = f;
+}
+
+→ Keep track of the highest frequency currently reached.
