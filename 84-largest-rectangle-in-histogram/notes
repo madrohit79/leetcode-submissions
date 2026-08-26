@@ -1,0 +1,336 @@
+LEETCODE 84 — LARGEST RECTANGLE IN HISTOGRAM
+
+CORE IDEA:
+
+Each bar can be part of a rectangle that spans multiple consecutive bars.
+
+Area = height × width
+
+The rectangle does NOT have to use only 2 bars.
+
+Example:
+
+[2, 2, 2]
+
+height = 2
+width = 3
+
+area = 2 × 3 = 6
+
+
+STACK:
+
+Use a Stack<Integer> to store INDEXES, not heights.
+
+Stack:
+[0, 1, 2]
+
+To get the height:
+
+h[stack.peek()]
+
+Important:
+
+stack.peek()      → gives the INDEX
+h[stack.peek()]   → gives the HEIGHT
+
+
+MAIN LOOP:
+
+for(int i = 0; i < h.length; i++)
+
+
+CASE 1:
+
+if(stack.isEmpty()){
+    stack.push(i);
+}
+
+If the stack is empty, simply push the current index.
+
+
+CASE 2:
+
+else if(h[stack.peek()] <= h[i]){
+    stack.push(i);
+}
+
+If the current height is greater than or equal to
+the height at the top of the stack:
+
+→ push the current index.
+
+This keeps the stack in increasing order of heights.
+
+
+CASE 3:
+
+else{
+
+    while(!stack.isEmpty() && h[stack.peek()] > h[i]){
+
+        int ht = h[stack.pop()];
+
+        int w;
+
+        if(stack.isEmpty()){
+            w = i;
+        }
+        else{
+            w = i - stack.peek() - 1;
+        }
+
+        int area = ht * w;
+
+        if(area > ma){
+            ma = area;
+        }
+    }
+
+    stack.push(i);
+}
+
+
+WHY DO WE POP?
+
+When a smaller height appears:
+
+Example:
+
+[5, 6, 2]
+
+When 2 arrives:
+
+6 > 2
+
+So the rectangle with height 6 cannot continue past index 2.
+
+Pop 6 and calculate its maximum possible rectangle.
+
+Then:
+
+5 > 2
+
+Pop 5 and calculate its maximum possible rectangle.
+
+The current smaller bar acts as the RIGHT boundary.
+
+
+WIDTH CALCULATION:
+
+After popping a height:
+
+If the stack is empty:
+
+w = i;
+
+This means there is no smaller bar on the left.
+
+Therefore, the rectangle can extend from index 0
+up to index i - 1.
+
+Example:
+
+[5, 6, 7, 2]
+
+When 2 arrives at i = 3:
+
+5, 6, 7 are popped.
+
+For height 5:
+
+stack becomes empty.
+
+width = i
+      = 3
+
+So:
+
+area = 5 × 3
+     = 15
+
+
+IF STACK IS NOT EMPTY:
+
+w = i - stack.peek() - 1;
+
+Why?
+
+stack.peek() = index of the previous smaller bar.
+
+Current i = index of the next smaller bar.
+
+The rectangle exists between these two smaller bars.
+
+Example:
+
+indexes:
+
+0  1  2  3
+2  5  6  2
+
+For height 5:
+
+previous smaller = index 0
+next smaller = index 3
+
+width:
+
+3 - 0 - 1
+= 2
+
+So height 5 covers:
+
+[5, 6]
+
+area:
+
+5 × 2 = 10
+
+
+SECOND WHILE LOOP:
+
+After the main for loop finishes, there may still be
+indexes inside the stack.
+
+Example:
+
+[2, 4, 4, 4]
+
+There is no smaller bar after the 4s.
+
+So the main loop never gets a chance to calculate
+their maximum areas.
+
+Therefore:
+
+while(!stack.isEmpty()){
+
+    int ht = h[stack.pop()];
+
+    int w;
+
+    if(stack.isEmpty()){
+        w = h.length;
+    }
+    else{
+        w = h.length - stack.peek() - 1;
+    }
+
+    int area = ht * w;
+
+    if(area > ma){
+        ma = area;
+    }
+}
+
+
+WHY h.length?
+
+We have reached the END of the array.
+
+So the end of the array acts like a smaller bar.
+
+If the stack becomes empty:
+
+→ there is no smaller bar on the left
+→ rectangle can extend from index 0
+→ width = h.length
+
+
+IMPORTANT FORMULAS:
+
+Area:
+
+area = height × width
+
+
+When stack becomes empty:
+
+width = i
+
+
+When stack is not empty:
+
+width = i - stack.peek() - 1
+
+
+At the end of the array:
+
+width = h.length
+
+or:
+
+width = h.length - stack.peek() - 1
+
+
+EXAMPLE:
+
+h = [2,1,5,6,2,3]
+
+When 2 at index 4 arrives:
+
+6 is popped:
+
+height = 6
+width = 1
+area = 6
+
+
+5 is popped:
+
+height = 5
+width = 2
+area = 10
+
+So:
+
+ma = 10
+
+
+KEY CONCEPT:
+
+The stack stores indexes of bars in increasing height order.
+
+When a smaller bar arrives:
+
+→ pop taller bars
+→ calculate their maximum possible width
+→ calculate area
+→ continue
+
+This allows us to find the largest rectangle efficiently.
+
+
+KEY SYNTAXES:
+
+Stack<Integer> stack = new Stack<>();
+
+stack.push(i);
+→ add index to stack
+
+stack.pop();
+→ remove and return top index
+
+stack.peek();
+→ see top index
+
+stack.isEmpty();
+→ check whether stack is empty
+
+h[stack.peek()];
+→ get the height of the bar whose index is at the top
+
+
+TIME COMPLEXITY:
+
+O(n)
+
+Each index is pushed once and popped once.
+
+
+SPACE COMPLEXITY:
+
+O(n)
+
+The stack can contain up to n indexes.
