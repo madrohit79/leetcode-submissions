@@ -8,7 +8,7 @@ class Solution {
                 max=weights[i];
             }
         }
-        int low = max;
+        int low = max; // the search space we chose with startinig max weight because suppose cap = 4 weight is 5 then 5 can never be shipped henceforth
         int high = s;
         while(low<=high){
             int d=1;
