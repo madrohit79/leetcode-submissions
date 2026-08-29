@@ -1,0 +1,29 @@
+# LeetCode 981 — Time Based Key-Value Store
+
+## Idea
+
+We need to store multiple values for the same key, where each value has a different timestamp.
+
+Example:
+
+set("foo", "bar", 1)
+set("foo", "bar2", 4)
+set("foo", "bar3", 7)
+
+Stored as:
+
+foo → [(1, "bar"), (4, "bar2"), (7, "bar3")]
+
+The timestamps are stored in increasing order.
+
+---
+
+## Data Structure
+
+Use a HashMap where:
+
+- Key → String
+- Value → ArrayList of timestamp/value pairs
+
+```java
+HashMap<String, ArrayList<Pair<Integer, String>>> map = new HashMap<>();
