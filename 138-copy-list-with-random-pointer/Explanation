@@ -1,0 +1,101 @@
+COPY RANDOM LIST — HASHMAP VISUAL
+
+Example:
+
+Original list:
+1 → 2 → 3 → null
+
+Random pointers:
+1.random → 3
+2.random → 1
+3.random → null
+
+
+PASS 1: Create copies
+
+For every original node:
+
+map.put(curr, new Node(curr.val));
+
+
+HashMap contents:
+
+┌─────────────────┬─────────────────┐
+│ ORIGINAL (KEY)  │ COPY (VALUE)    │
+├─────────────────┼─────────────────┤
+│      Node 1     │      Node 1'    │
+│      Node 2     │      Node 2'    │
+│      Node 3     │      Node 3'    │
+└─────────────────┴─────────────────┘
+
+Meaning:
+
+map.get(Node 1) → Node 1'
+map.get(Node 2) → Node 2'
+map.get(Node 3) → Node 3'
+
+
+PASS 2: Connect next + random
+
+For curr = Node 1:
+
+curr.next   → Node 2
+curr.random → Node 3
+
+So:
+
+copy.next   = map.get(curr.next)
+            = map.get(Node 2)
+            = Node 2'
+
+copy.random = map.get(curr.random)
+            = map.get(Node 3)
+            = Node 3'
+
+
+Therefore:
+
+Copy:
+1' → 2' → 3'
+
+1'.random → 3'
+
+
+For Node 2:
+
+2'.next   → 3'
+2'.random → 1'
+
+
+For Node 3:
+
+3'.next   → null
+3'.random → null
+
+
+FINAL:
+
+Original:
+1 → 2 → 3
+
+        ↓ HashMap
+
+Copy:
+1' → 2' → 3'
+
+Random:
+1'.random → 3'
+2'.random → 1'
+3'.random → null
+
+
+KEY IDEA:
+
+HashMap = Original Node → Copied Node
+
+map.get(originalNode)
+        ↓
+   copiedNode
+
+It acts as a "translation table" from every
+original node to its corresponding new node.
