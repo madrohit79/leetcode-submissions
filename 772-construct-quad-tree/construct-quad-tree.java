@@ -51,14 +51,13 @@ class Solution { //question help from neetcode
                     break;
                 }
             }
-            if(!allsame){
+            if(!allsame){ //to break from outerloop
                 break;
             }
         }
         if(allsame){
             return new Node(grid[r][c]==1,true); // true means value is 1 and false means value is 0
         }
-
         n=n/2;
         Node topLeft=dfs(grid,n,r,c);
         Node topRight=dfs(grid,n,r,c+n);
