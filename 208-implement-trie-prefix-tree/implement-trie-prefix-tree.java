@@ -1,6 +1,6 @@
 class Trie {
     class TrieNode{
-        TrieNode trieNode[];
+        TrieNode[] trieNode;
         boolean WE;
         TrieNode(){
             trieNode = new TrieNode[26];
